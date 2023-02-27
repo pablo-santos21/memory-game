@@ -2,8 +2,6 @@ import React from 'react';
 import '../style/Card.css';
 
 const Card = ({ card, index, handleClick }) => {
-  const cardClassName = card.status ? 'ativo' : '';
-
   return (
     <div
       className={`card ${card.status} rounded-lg`}
