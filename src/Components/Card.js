@@ -1,9 +1,15 @@
 import React from 'react';
+import '../style/Card.css';
 
-const Card = ({ card, index, clickHandler }) => {
+const Card = ({ card, index, handleClick }) => {
+  const cardClassName = card.status ? 'ativo' : '';
+
   return (
-    <div className="">
-      <img src={card.img} alt={card.name} />
+    <div
+      className={`card ${card.status} rounded-lg`}
+      onClick={() => handleClick(index)}
+    >
+      <img src={card.img} alt={card.name} className="rounded-lg" />
     </div>
   );
 };
