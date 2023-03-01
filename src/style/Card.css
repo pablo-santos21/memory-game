@@ -1,3 +1,7 @@
+.fundo {
+  background-image: url(../img/fundo.jpg);
+}
+
 img{
     opacity: 0;
     animation:  hideImage linear;

@@ -38,7 +38,8 @@ const Cards = () => {
       { id: 15, name: 'Hufflepuff', status: '', img: './images/16.jpg' },
     ].sort(() => Math.random() - 0.5),
   );
-
+  // const [selectedCount, setSelectedCount] = useState(0);
+  // const [timer, setTimer] = useEffect(0);
   const [viewCard, setViewCard] = useState(-1);
   const viewIndex = useRef(-1);
 
@@ -55,7 +56,7 @@ const Cards = () => {
         cards[currentCard].status = 'unmatch';
         cards[viewCard].status = 'unmatch';
         setCards([...cards]);
-      }, 1000);
+      }, 500);
     }
   };
 
@@ -80,7 +81,7 @@ const Cards = () => {
   };
 
   return (
-    <div className="grid grid-cols-8 gap-8">
+    <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 lg:gap-8">
       {cards.map((card, index) => {
         return (
           <Card
