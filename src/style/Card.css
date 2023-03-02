@@ -1,43 +1,35 @@
 .fundo {
   background-image: url(../img/fundo.jpg);
-}
-
-img{
-    opacity: 0;
-    animation:  hideImage linear;
+  background-position: center;
 }
 
 .card{
-  background-image: url(../img/vira.jpg);
-  background-size: cover;
-  animation: hideCard linear;
+  position: relative;
 }
 
-.card.ativo{
-    transform: rotateY(0);
+/* Virando Front */
+.card .front{
+    transform: rotateY(90deg);
+    position: absolute;
+    transition: all ease-in 0.2s; 
   }
   
-  .card.ativo img{
-    opacity: 1;
-  }
-  
-  .unmatch{
-      border-radius: 5px;
-      animation: 2s hideCard linear;
+  .flipped .front{
+    transform: rotateY(0deg);
+    transition-delay: 0.2s;
   }
 
-  @keyframes hideCard {
-    0%, 70%{
-      transform: rotateX(0deg);
-    }100%{
-      transform: rotateX(180deg);
-    }
+
+  /* Virando back */
+  .card .back{
+    transition: all ease-in 0.2s; 
+    transition-delay: 0.2s;
   }
   
-  @keyframes hideImage {
-    0%, 84%{
-      opacity: 1;
-    }85%{
-      opacity: 0;
-    }
+  .flipped .back{
+    transform: rotateY(90deg);
+    transition-delay: 0s;
   }
+
+
+ 

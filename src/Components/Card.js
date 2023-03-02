@@ -1,13 +1,23 @@
 import React from 'react';
-import '../style/Card.css';
 
-const Card = ({ card, index, handleClick }) => {
+const Card = ({ card, back, handleChoice, flipped, disabled }) => {
+  const handleClick = () => {
+    if (!disabled) {
+      handleChoice(card);
+    }
+  };
+
   return (
-    <div
-      className={`card ${card.status} rounded-lg`}
-      onClick={() => handleClick(index)}
-    >
-      <img src={card.img} alt={card.name} className="rounded-lg" />
+    <div className="card">
+      <div className={flipped ? 'flipped' : ''}>
+        <img className="front" src={card.src} alt="Card Potter" />
+        <img
+          className="back"
+          src={back}
+          onClick={handleClick}
+          alt="Card Back"
+        />
+      </div>
     </div>
   );
 };

@@ -1,97 +1,160 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import vira from '../img/vira.jpg';
 import Card from './Card';
 
+const cardImages = [
+  {
+    src: '../images/01.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/02.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/03.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/04.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/05.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/06.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/07.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/08.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/09.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/10.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/11.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/12.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/13.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/14.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/15.jpg',
+    matched: false,
+  },
+  {
+    src: '../images/16.jpg',
+    matched: false,
+  },
+];
+
 const Cards = () => {
-  const [cards, setCards] = useState(
-    [
-      { id: 0, name: 'Logo', status: '', img: './images/01.jpg' },
-      { id: 0, name: 'Logo', status: '', img: './images/01.jpg' },
-      { id: 1, name: 'Hogwarts', status: '', img: './images/02.jpg' },
-      { id: 1, name: 'Hogwarts', status: '', img: './images/02.jpg' },
-      { id: 2, name: 'Hermione', status: '', img: './images/03.jpg' },
-      { id: 2, name: 'Hermione', status: '', img: './images/03.jpg' },
-      { id: 3, name: 'Rony', status: '', img: './images/04.jpg' },
-      { id: 3, name: 'Rony', status: '', img: './images/04.jpg' },
-      { id: 4, name: 'Brazao', status: '', img: './images/05.jpg' },
-      { id: 4, name: 'Brazao', status: '', img: './images/05.jpg' },
-      { id: 5, name: 'Harry Potter', status: '', img: './images/06.jpg' },
-      { id: 5, name: 'Harry Potter', status: '', img: './images/06.jpg' },
-      { id: 6, name: 'Dumbledore', status: '', img: './images/07.jpg' },
-      { id: 6, name: 'Dumbledore', status: '', img: './images/07.jpg' },
-      { id: 7, name: 'Minerva', status: '', img: './images/08.jpg' },
-      { id: 7, name: 'Minerva', status: '', img: './images/08.jpg' },
-      { id: 8, name: 'Gina', status: '', img: './images/09.jpg' },
-      { id: 8, name: 'Gina', status: '', img: './images/09.jpg' },
-      { id: 9, name: 'Valdemort', status: '', img: './images/10.jpg' },
-      { id: 9, name: 'Valdemort', status: '', img: './images/10.jpg' },
-      { id: 10, name: 'Hagrid', status: '', img: './images/11.jpg' },
-      { id: 10, name: 'Hagrid', status: '', img: './images/11.jpg' },
-      { id: 11, name: 'Siryus', status: '', img: './images/12.jpg' },
-      { id: 11, name: 'Siryus', status: '', img: './images/12.jpg' },
-      { id: 12, name: 'Grifindor', status: '', img: './images/13.jpg' },
-      { id: 12, name: 'Grifindor', status: '', img: './images/13.jpg' },
-      { id: 13, name: 'Slytherin', status: '', img: './images/14.jpg' },
-      { id: 13, name: 'Slytherin', status: '', img: './images/14.jpg' },
-      { id: 14, name: 'Ravenclaw', status: '', img: './images/15.jpg' },
-      { id: 14, name: 'Ravenclaw', status: '', img: './images/15.jpg' },
-      { id: 15, name: 'Hufflepuff', status: '', img: './images/16.jpg' },
-      { id: 15, name: 'Hufflepuff', status: '', img: './images/16.jpg' },
-    ].sort(() => Math.random() - 0.5),
-  );
-  // const [selectedCount, setSelectedCount] = useState(0);
-  // const [timer, setTimer] = useEffect(0);
-  const [viewCard, setViewCard] = useState(-1);
-  const viewIndex = useRef(-1);
+  const [cards, setCards] = useState([]);
+  const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
-  const matchCheck = (currentCard) => {
-    if (cards[currentCard].id === cards[viewCard].id) {
-      cards[viewCard].status = 'ativo matched';
-      cards[currentCard].status = 'ativo matched';
-      setViewCard(-1);
-    } else {
-      cards[currentCard].status = 'ativo';
-      setCards([...cards]);
-      setTimeout(() => {
-        setViewCard(-1);
-        cards[currentCard].status = 'unmatch';
-        cards[viewCard].status = 'unmatch';
-        setCards([...cards]);
-      }, 500);
-    }
+  // chance por cliques
+  const handleChoice = (card) => {
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
-  const handleClick = (index) => {
-    if (index !== viewIndex.current) {
-      if (cards[index].status === 'ativo matched') {
-        alert('já combinado');
+  //  ambaralhar card
+  const shuffleCards = () => {
+    const shuffledCards = [...cardImages, ...cardImages]
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, id: Math.random() }));
+
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setCards(shuffledCards);
+    setTurns(0);
+  };
+
+  // Comparando as 2 cartas
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      setDisabled(true);
+      if (choiceOne.src === choiceTwo.src) {
+        setCards((prevCards) => {
+          return prevCards.map((card) => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true };
+            } else {
+              return card;
+            }
+          });
+        });
+        resetTurn();
       } else {
-        if (viewCard === -1) {
-          viewIndex.current = index;
-          cards[index].status = 'ativo';
-          setViewCard([...cards]);
-          setViewCard(index);
-        } else {
-          matchCheck(index);
-          viewIndex.current = -1;
-        }
+        setTimeout(() => resetTurn(), 500);
       }
-    } else {
-      alert('Carta ja Selecionada');
     }
+  }, [choiceOne, choiceTwo]);
+
+  // resetando as chances e acrescentando 1 tentativa
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prevTurns) => prevTurns + 1);
+    setDisabled(false);
   };
+
+  // Iniciando automaticamente o jogo
+  useEffect(() => {
+    shuffleCards();
+  }, []);
 
   return (
-    <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 lg:gap-8">
-      {cards.map((card, index) => {
-        return (
-          <Card
-            key={index}
-            card={card}
-            index={index}
-            handleClick={handleClick}
-          />
-        );
-      })}
+    <div>
+      <div className="py-4">
+        <samp className="text-2xl text-gray-200">Movimentos: {turns}</samp>
+      </div>
+      <div className="pt-4 pb-10">
+        <button
+          onClick={shuffleCards}
+          className="py-2 px-4 bg-green-600 font-bold text-gray-800"
+        >
+          New Game
+        </button>
+      </div>
+
+      <div>
+        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 lg:gap-8">
+          {cards.map((card) => (
+            <Card
+              key={card.id}
+              card={card}
+              back={vira}
+              handleChoice={handleChoice}
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              disabled={disabled}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
